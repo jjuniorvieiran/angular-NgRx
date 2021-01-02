@@ -1,5 +1,14 @@
 /* NgRx */
 import { createReducer, on, createAction } from '@ngrx/store';
+import { Product } from '../product';
+
+
+// State for this feature (Product)
+export interface ProductState {
+  showProductCode: boolean;
+  currentProduct: Product;
+  products: Product[];
+}
 
 export const productReducer = createReducer(
   { showProductCode: true }, //initial value
