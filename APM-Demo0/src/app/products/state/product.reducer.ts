@@ -1,7 +1,12 @@
 /* NgRx */
 import { createReducer, on, createAction } from '@ngrx/store';
+import * as AppState from '../../state/app.state';
+
 import { Product } from '../product';
 
+export interface State extends AppState.State {
+  products: ProductState;
+}
 
 // State for this feature (Product)
 export interface ProductState {
