@@ -4,6 +4,12 @@ import * as AppState from '../../state/app.state';
 
 import { Product } from '../product';
 
+const initialState: ProductState = {
+  showProductCode: true,
+  currentProduct: null,
+  products: []
+};
+
 export interface State extends AppState.State {
   products: ProductState;
 }
@@ -16,7 +22,7 @@ export interface ProductState {
 }
 
 export const productReducer = createReducer<ProductState>(
-  { showProductCode: true } as ProductState, //initial value
+  initialState, //initial value
   on(createAction('[Product] Toggle Product Code'), (state): ProductState => {
     console.log('original state' + JSON.stringify(state));
     return {
