@@ -22,6 +22,7 @@ export interface ProductState {
 }
 
 
+
 // Selector functions
 const getProductFeatureState = createFeatureSelector<ProductState>('products');
 
@@ -40,6 +41,7 @@ export const getProducts = createSelector(
   getProductFeatureState,
   state => state.products
 );
+
 
 
 export const productReducer = createReducer<ProductState>(
