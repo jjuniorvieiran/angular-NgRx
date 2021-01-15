@@ -23,26 +23,27 @@ export class ProductListComponent implements OnInit{
 
   // Used to highlight the selected product in the list
   selectedProduct: Product | null;
-  products$: Observable<Product[]>;
 
-  constructor(private store: Store<State>, private productService: ProductService) { }
+  products$: Observable<Product[]>;
+  // Used to highlight the selected product in the list
+  selectedProduct$: Observable<Product>;
+
+  displayCode$: Observable<boolean>;
+
+  constructor(private store: Store<State>) { }
 
   ngOnInit(): void {
-    // TODO: Unsubscribe
-    this.store.select(getCurrentProduct).subscribe(
-      currentProduct => this.selectedProduct = currentProduct
-    );
-
     // Do NOT subscribe here because it uses an async pipe
     // This gets the initial values until the load is complete.
     this.products$ = this.store.select(getProducts);
 
     this.store.dispatch(ProductActions.loadProducts());
 
-    // TODO: Unsubscribe
-    this.store.select(getShowProductCode).subscribe(
-      showProductCode => this.displayCode = showProductCode
-    );
+    // Do NOT subscribe here because it uses an async pipe
+    this.selectedProduct$ = this.store.select(getCurrentProduct);
+    
+    // Do NOT subscribe here because it uses an async pipe
+    this.displayCode$ = this.store.select(getShowProductCode);
   }
 
   checkChanged(): void {
