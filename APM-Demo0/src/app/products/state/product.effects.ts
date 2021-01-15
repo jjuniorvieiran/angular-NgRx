@@ -20,7 +20,7 @@ export class ProductEffects {
         mergeMap(() => this.productService.getProducts()
           .pipe(
             map(products => ProductActions.loadProductsSuccess({ products })),
-            catchError(error => of(ProductActions.loadProductsFailure({ error })))
+            catchError(error => of(ProductActions.loadProductsFailure({ error }))) // exception handling
           )
         )
       );

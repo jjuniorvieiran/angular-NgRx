@@ -5,12 +5,6 @@ import * as ProductActions from './product.actions';
 
 import { Product } from '../product';
 
-// State for this feature (Product)
-const initialState: ProductState = {
-  showProductCode: true,
-  currentProduct: null,
-  products: []
-};
 
 export interface State extends AppState.State {
   products: ProductState;
@@ -19,7 +13,15 @@ export interface ProductState {
   showProductCode: boolean;
   currentProduct: Product;
   products: Product[];
+  error: string;
 }
+
+const initialState: ProductState = {
+  showProductCode: true,
+  currentProduct: null,
+  products: [],
+  error: ''
+};
 
 
 
@@ -42,7 +44,10 @@ export const getProducts = createSelector(
   state => state.products
 );
 
-
+export const getError = createSelector(
+  getProductFeatureState,
+  state => state.error
+);
 
 export const productReducer = createReducer<ProductState>(
   initialState,
@@ -87,8 +92,15 @@ export const productReducer = createReducer<ProductState>(
     return {
       ...state,
       products: [],
-      //error: action.error
+      error: ''
+    };
+  })
+  ,
+  on(ProductActions.loadProductsFailure, (state, action): ProductState => {
+    return {
+      ...state,
+      products: [],
+      error: action.error
     };
   })
 );
-

@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 
 import { Product } from '../product';
 import { ProductService } from '../product.service';
-import { getCurrentProduct, getProducts, getShowProductCode, State } from '../state/product.reducer';
+import { getCurrentProduct, getError, getProducts, getShowProductCode, State } from '../state/product.reducer';
 import * as ProductActions from '../state/product.actions';
 import { Observable } from 'rxjs';
 
@@ -13,9 +13,8 @@ import { Observable } from 'rxjs';
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css']
 })
-export class ProductListComponent implements OnInit{
+export class ProductListComponent implements OnInit {
   pageTitle = 'Products';
-  errorMessage: string;
 
   displayCode: boolean;
 
@@ -30,6 +29,9 @@ export class ProductListComponent implements OnInit{
 
   displayCode$: Observable<boolean>;
 
+  errorMessage$: Observable<string>;
+
+
   constructor(private store: Store<State>) { }
 
   ngOnInit(): void {
@@ -40,11 +42,15 @@ export class ProductListComponent implements OnInit{
     this.store.dispatch(ProductActions.loadProducts());
 
     // Do NOT subscribe here because it uses an async pipe
+    this.errorMessage$ = this.store.select(getError);
+
+    // Do NOT subscribe here because it uses an async pipe
     this.selectedProduct$ = this.store.select(getCurrentProduct);
-    
+
     // Do NOT subscribe here because it uses an async pipe
     this.displayCode$ = this.store.select(getShowProductCode);
   }
+
 
   checkChanged(): void {
     this.store.dispatch(ProductActions.toggleProductCode());
