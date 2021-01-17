@@ -54,6 +54,7 @@ export class ProductEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // Define the form group
     this.productForm = this.fb.group({
       productName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       productCode: ['', Validators.required],
@@ -135,10 +136,7 @@ export class ProductEditComponent implements OnInit {
             error: err => this.errorMessage = err
           });
         } else {
-          this.productService.updateProduct(product).subscribe({
-            next: p => this.store.dispatch(ProductActions.setCurrentProduct({ currentProductId: p.id })),
-            error: err => this.errorMessage = err
-          });
+          this.store.dispatch(ProductActions.updateProduct({ product }));
         }
       }
     }
