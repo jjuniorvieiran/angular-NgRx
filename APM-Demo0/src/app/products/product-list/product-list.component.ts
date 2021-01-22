@@ -5,7 +5,7 @@ import { Product } from '../product';
   selector: 'pm-product-list',
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush //ChangeDetectionStrategy OnPush - Now the children will not be updated 
 })
 export class ProductListComponent {
   pageTitle = 'Products';
